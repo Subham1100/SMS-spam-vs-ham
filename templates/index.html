@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email spam vs ham</title>
+    <link rel="stylesheet" href="static/css/stlye.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+      integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body class="bg-dark">
+    <div class="container">
+      <div class="row">
+        <div class="card mt-50" style="width: 100%; height: 100%">
+          <div class="card-header">
+            <div class="col-12" style="text-align: center">
+              <h1>SMS Spam V/s Ham</h1>
+            </div>
+          </div>
+          <div class="card-body">
+            <form action="#" method="post" accept-charset="utf-8">
+              <label><h1>Enter your text</h1></label>
+              <textarea name="sms_text" id="sms_text" cols="100" rows="5">
+              </textarea>
+              <br />
+              <div class="col-md-5 form-group" >
+                <button
+                  class="btn btn-primary form-control"
+                  onclick="send_data()" 
+                >
+                  Check
+                </button>
+                  <h4 style="display: inline-block;"><span id="check" ></span></h4>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function form_handler(event) {
+        event.preventDefault(); // Don't submit the form normally
+    }
+      function send_data()
+      {
+          document.querySelector('form').addEventListener("submit",form_handler);
+
+          var fd=new FormData(document.querySelector('form'));
+
+          var xhr= new XMLHttpRequest({mozSystem: true});
+
+          xhr.open('POST','/check',true);
+          document.getElementById('check').innerHTML="Wait! Predicting Spam/Ham";
+          xhr.onreadystatechange = function(){
+              if(xhr.readyState == XMLHttpRequest.DONE){
+                  document.getElementById('check').innerHTML="The Text is a "+xhr.responseText;
+
+              }
+          };
+
+          xhr.onload= function(){};
+
+          xhr.send(fd);
+      }
+    </script>
+  </body>
+</html>
